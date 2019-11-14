@@ -13,28 +13,28 @@
     <input  class="toggle-all"
             type="checkbox"
             name="toggleAll"
+            [ngModel] = "isAllDone()"
+            (ngModelChange) = "toggleAllDone()"
     />
     <ul class="todo-list">
-      <ng-container *ngFor="let item of items">
-        <app-todo-item *ngIf="!onlyCompleted && !onlyActives 
-        || onlyCompleted && item.isDone 
-        || onlyActives && !item.isDone" 
-        [data]="item">
-        </app-todo-item>
-    </ng-container>
+      <li *ngFor="let item of getFilteredItems()"  
+            [class.editing]="itemCompo.editionMode" 
+            [class.completed]="item.isDone">
+        <app-todo-item #itemCompo [data]="item"></app-todo-item>
+      </li>
     </ul>
   </section>
   <footer class="footer">
     <span class="todo-count"><strong>{{itemLeft}}</strong> restantes</span>
     <ul class="filters">
       <li>
-        <a class="filterAll" (click)="displayAll()">Tous</a>
+        <a class="filterAll" (click)="currentFilter = filterAll">Tous</a>
       </li>
       <li>
-        <a class="filterActives" (click)="displayActivesItems()">Actifs</a>
+        <a class="filterActives" (click)="currentFilter = filterUndone">Actifs</a>
       </li>
       <li>
-        <a class="filterCompleted" (click)="displayCompletedItems()">Complétés</a>
+        <a class="filterCompleted" (click)="currentFilter = filterDone">Complétés</a>
       </li>
     </ul>
     <button class="clear-completed" (click)="removeCheckedItems()">Supprimer cochées</button>

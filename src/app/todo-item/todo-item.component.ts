@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import { TodoItemData } from '../dataTypes/TodoItemData';
 import { TodoService } from '../todo.service';
 
@@ -11,7 +11,8 @@ import { TodoService } from '../todo.service';
 export class TodoItemComponent implements OnInit {
 
   @Input() private data: TodoItemData;
-  edition: boolean = false;
+  @ViewChild("newTextInput", {static: false}) private inputLabel: ElementRef;
+  private _editionMode: boolean = false;
   
   constructor(private todoService: TodoService) { }
 
@@ -22,21 +23,28 @@ export class TodoItemComponent implements OnInit {
     return this.data.label
   }
 
-  removeItem() {
-    this.todoService.removeItems(this.data);
+  set label(newLabel: string) {
+    this.todoService.setItemsLabel(newLabel, this.data);
   }
 
-  itemDone(done: boolean) {
+  get isDone() : boolean {
+    return this.data.isDone;
+  }
+
+  set isDone(done: boolean) {
     this.todoService.setItemsDone(done, this.data);
   }
 
-  editItem() {
-    this.edition = true;
-    //TODO : le focus sur le input
+  get editionMode(): boolean {
+    return this._editionMode;
   }
 
-  editItemLabel(newLabel: string) {
-    this.data.label = newLabel;
-    this.edition = false;
+  set editionMode(e: boolean) {
+    this._editionMode = e;
+    requestAnimationFrame(() => this.inputLabel.nativeElement.focus());
+  }
+
+  removeItem() {
+    this.todoService.removeItems(this.data);
   }
 }

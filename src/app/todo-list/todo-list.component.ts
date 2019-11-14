@@ -3,6 +3,8 @@ import {TodoListData} from '../dataTypes/TodoListData';
 import {TodoItemData} from '../dataTypes/TodoItemData';
 import {TodoService} from '../todo.service';
 
+type FCT_FILTER_ITEMS = (item: TodoItemData) => boolean;
+
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
@@ -11,8 +13,12 @@ import {TodoService} from '../todo.service';
 })
 export class TodoListComponent implements OnInit {
 
-  @Input() 
-  private data: TodoListData;
+  filterAll: FCT_FILTER_ITEMS = () => true;
+  filterDone: FCT_FILTER_ITEMS = (item) => item.isDone;
+  filterUndone: FCT_FILTER_ITEMS = (item) => !item.isDone;
+  currentFilter = this.filterAll;  
+
+  @Input() private data: TodoListData;
 
   private titre: string;
   private onlyCompleted: boolean = false;
@@ -35,9 +41,7 @@ export class TodoListComponent implements OnInit {
   }
 
   get itemLeft(): number {
-    let left: number = 0; 
-    this.items.map((v) => !v.isDone ? left=left+1 : "");
-    return left;
+    return this.data.items.filter(this.filterUndone).length
   }
 
   appendItem(label: string) {
@@ -67,21 +71,39 @@ export class TodoListComponent implements OnInit {
     this.items.map((v) => v.isDone ? this.removeItem(v) : '');
   }
 
-  displayCompletedItems() {
-    this.onlyCompleted = true;
-    this.onlyActives = false;
-    console.log("only completed");
+  isAllDone(): boolean {
+    //return this.items.reduce( (acc, it) => acc && it.isDone, true);
+    return this.items.every( it => it.isDone );
   }
 
-  displayActivesItems() {
-    this.onlyActives = true;
-    this.onlyCompleted = false;
-    console.log("only actives");
+  toggleAllDone() {
+    const done = !this.isAllDone();
+    this.todoService.setItemsDone(done, ...this.items);
   }
 
-  displayAll() {
-    this.onlyCompleted = false;
-    this.onlyActives = false;
-    console.log("all");
+  getFilteredItems():TodoItemData[] {
+    return this.data ? this.data.items.filter(this.currentFilter) : [] ;
   }
+
+
+
+
+  // displayCompletedItems() {
+  //   this.onlyCompleted = true;
+  //   this.onlyActives = false;
+  //   console.log("only completed");
+  // }
+
+  // displayActivesItems() {
+  //   this.onlyActives = true;
+  //   this.onlyCompleted = false;
+  //   console.log("only actives");
+  // }
+
+  // displayAll() {
+  //   this.onlyCompleted = false;
+  //   this.onlyActives = false;
+  //   console.log("all");
+  // }
+
 }

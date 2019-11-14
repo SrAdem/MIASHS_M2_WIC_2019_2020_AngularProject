@@ -1,20 +1,18 @@
-<li [ngClass]="{'editing': edition, 'completed': data.isDone}">
-  <div class="view">
-    <input 	class			= "toggle"
-            type			= "checkbox"
-            name			= "fait"
-            [ngModel] = "data.isDone" 
-            (ngModelChange) = "itemDone($event)"
-    />
-    <label class="texte" (dblclick)="editItem(textInput)">{{label}}</label>
-    <button class="destroy" (click)="removeItem()"></button>
-  </div>
-  <form (submit)="editItemLabel(textInput.value);">
-    <input  #textInput
-            name    = "newTextInput"
-            class   = "edit"
-            value   = {{data.label}}
-            (blur)  = "editItemLabel(textInput.value);"
-    />
-  </form>
-</li>
+<div class="view">
+  <input 	class			= "toggle"
+          type			= "checkbox"
+          name			= "fait"
+          [ngModel] = "isDone" 
+          (ngModelChange) = "isDone = $event"
+  />
+  <label class="texte" (dblclick)="editionMode = true">{{label}}</label>
+  <button class="destroy" (click)="removeItem()"></button>
+</div>
+<form *ngIf="editionMode" (submit)="label = newTextInput.value">
+  <input  #newTextInput
+          name    = "newTextInput"
+          class   = "edit"
+          [ngModel] = "label"
+          (blur)  = "label = newTextInput.value;"
+  />
+</form>
