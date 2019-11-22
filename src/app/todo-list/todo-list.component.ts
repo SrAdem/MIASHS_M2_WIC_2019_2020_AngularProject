@@ -92,10 +92,10 @@ export class TodoListComponent implements OnInit {
   }
 
   undo() {
-    console.log("undo");
+    this.todoService.undoItem();
   }
 
   redo() {
-    console.log("redo");
+    this.todoService.redoItem();
   }
 }

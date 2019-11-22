@@ -59,7 +59,32 @@ export class TodoService {
     this.save(tdl);
   }
 
-  load() {
+  undoItem() {
+    if(this.undo.length !== 0) {
+      this.redo.push(this.todoListSubject.getValue()); //On met la liste actuelle dans le redo
+      const before = this.undo.pop(); //On retire la liste précédente du undo
+      this.todoListSubject.next( { //La liste précédente devient la liste actuelle
+        label: before.label,
+        items: before.items
+      });
+
+      this.saveToLocalStorage();
+    }
+  }
+
+  redoItem() {
+    if(this.redo.length !== 0) {
+      this.undo.push(this.todoListSubject.getValue()) //On met la liste actuelle dans le undo
+      const after = this.redo.pop(); //On retire la liste suivante de redo
+      this.todoListSubject.next( { //La liste suivante devient la liste actuelle
+        label: after.label,
+        items: after.items
+      });
+      this.saveToLocalStorage();
+    }
+  }
+
+  private load() {
     if ( localStorage.getItem("todoList") !== null ) {
       const tdl = JSON.parse(localStorage.getItem("todoList"));
       this.todoListSubject.next( {
@@ -67,11 +92,21 @@ export class TodoService {
         items: tdl.items
       });
     }
+    if( localStorage.getItem("undo") !== null ) {
+      this.undo = JSON.parse(localStorage.getItem("undo"));
+    }
+    if( localStorage.getItem("redo") !== null ) {
+      this.undo = JSON.parse(localStorage.getItem("redo"));
+    }
   }
 
-  save(befor:TodoListData) {
-    this.undo.push(befor);
+  private save(before:TodoListData) {
+    this.undo.push(before);
+    this.redo = [];
+    this.saveToLocalStorage();
+  }
 
+  private saveToLocalStorage() {
     localStorage.setItem( "undo", JSON.stringify(this.undo) );
     localStorage.setItem( "todoList", JSON.stringify(this.todoListSubject.getValue()) );
     localStorage.setItem( "redo", JSON.stringify(this.redo) );
