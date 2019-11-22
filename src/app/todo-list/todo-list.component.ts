@@ -3,6 +3,9 @@ import {TodoListData} from '../dataTypes/TodoListData';
 import {TodoItemData} from '../dataTypes/TodoItemData';
 import {TodoService} from '../todo.service';
 
+import { faUndo } from '@fortawesome/free-solid-svg-icons';
+import { faRedo } from '@fortawesome/free-solid-svg-icons';
+
 type FCT_FILTER_ITEMS = (item: TodoItemData) => boolean;
 
 @Component({
@@ -19,6 +22,9 @@ export class TodoListComponent implements OnInit {
   currentFilter = this.filterAll;  
 
   @Input() private data: TodoListData;
+
+  faUndo = faUndo;
+  faRedo = faRedo;
 
   private titre: string;
   private onlyCompleted: boolean = false;
@@ -85,25 +91,11 @@ export class TodoListComponent implements OnInit {
     return this.data ? this.data.items.filter(this.currentFilter) : [] ;
   }
 
+  undo() {
+    console.log("undo");
+  }
 
-
-
-  // displayCompletedItems() {
-  //   this.onlyCompleted = true;
-  //   this.onlyActives = false;
-  //   console.log("only completed");
-  // }
-
-  // displayActivesItems() {
-  //   this.onlyActives = true;
-  //   this.onlyCompleted = false;
-  //   console.log("only actives");
-  // }
-
-  // displayAll() {
-  //   this.onlyCompleted = false;
-  //   this.onlyActives = false;
-  //   console.log("all");
-  // }
-
+  redo() {
+    console.log("redo");
+  }
 }

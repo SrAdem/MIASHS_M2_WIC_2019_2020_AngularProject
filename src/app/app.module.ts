@@ -5,8 +5,9 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoItemComponent } from './todo-item/todo-item.component';
-import {TodoService} from './todo.service';
-import {FormsModule} from '@angular/forms';
+import { TodoService } from './todo.service';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -16,7 +17,9 @@ import {FormsModule} from '@angular/forms';
     TodoItemComponent
   ],
   imports: [
-    BrowserModule, FormsModule
+    BrowserModule, 
+    FormsModule, 
+    FontAwesomeModule
   ],
   providers: [TodoService],
   bootstrap: [AppComponent]
