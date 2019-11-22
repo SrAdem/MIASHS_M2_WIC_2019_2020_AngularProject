@@ -26,6 +26,7 @@ export class TodoListComponent implements OnInit {
   faUndo = faUndo;
   faRedo = faRedo;
 
+  private _editTitle: boolean = false;
   private titre: string;
   private onlyCompleted: boolean = false;
   private onlyActives: boolean = false;
@@ -48,6 +49,18 @@ export class TodoListComponent implements OnInit {
 
   get itemLeft(): number {
     return this.data.items.filter(this.filterUndone).length
+  }
+
+  get editTitle() : boolean {
+    return this._editTitle;
+  }
+
+  set editTitle(bool : boolean) {
+    this._editTitle = bool;
+  }
+
+  listLabel(label: string) {
+    this.todoService.setListLabel(label);
   }
 
   appendItem(label: string) {

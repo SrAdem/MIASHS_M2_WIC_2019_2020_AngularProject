@@ -19,6 +19,16 @@ export class TodoService {
     return this.todoListSubject.asObservable();
   }
 
+  setListLabel(title: string) {
+    const tdl = this.todoListSubject.getValue();
+    this.todoListSubject.next( {
+      label: title,
+      items: tdl.items
+    });
+
+    this.save(tdl);
+  }
+
   setItemsLabel(label: string, ...items: TodoItemData[] ) {
     const tdl = this.todoListSubject.getValue();
     this.todoListSubject.next( {
