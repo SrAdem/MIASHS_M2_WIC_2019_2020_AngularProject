@@ -24,7 +24,8 @@ export class TodoItemComponent implements OnInit {
   }
 
   set label(newLabel: string) {
-    this.todoService.setItemsLabel(newLabel, this.data);
+    newLabel !== this.data.label ? this.todoService.setItemsLabel(newLabel, this.data) : '';
+    this._editionMode = false;
   }
 
   get isDone() : boolean {
