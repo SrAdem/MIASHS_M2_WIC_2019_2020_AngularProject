@@ -108,7 +108,7 @@ export class TodoListComponent implements OnInit {
   }
 
   deleteAllItems() {
-    console.log("deleteAll");
+    this.todoService.resetListItems();
   }
 
   undo() {

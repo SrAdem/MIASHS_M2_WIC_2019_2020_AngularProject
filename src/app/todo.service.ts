@@ -69,6 +69,16 @@ export class TodoService {
     this.save(tdl);
   }
 
+  resetListItems() {
+    const tdl = this.todoListSubject.getValue();
+    this.todoListSubject.next( {
+      label: tdl.label,
+      items: []
+    });
+
+    this.save(tdl);
+  }
+
   undoItem() {
     if(this.undo.length !== 0) {
       this.redo.push(this.todoListSubject.getValue()); //On met la liste actuelle dans le redo
