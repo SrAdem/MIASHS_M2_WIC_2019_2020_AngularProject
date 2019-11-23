@@ -5,6 +5,7 @@ import {TodoService} from '../todo.service';
 
 import { faUndo } from '@fortawesome/free-solid-svg-icons';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 type FCT_FILTER_ITEMS = (item: TodoItemData) => boolean;
 
@@ -26,6 +27,7 @@ export class TodoListComponent implements OnInit {
   
   faUndo = faUndo;
   faRedo = faRedo;
+  faTrash = faTrashAlt;
 
   private _editTitle: boolean = false;
   private onlyCompleted: boolean = false;
@@ -103,6 +105,10 @@ export class TodoListComponent implements OnInit {
 
   getFilteredItems():TodoItemData[] {
     return this.data ? this.data.items.filter(this.currentFilter) : [] ;
+  }
+
+  deleteAllItems() {
+    console.log("deleteAll");
   }
 
   undo() {

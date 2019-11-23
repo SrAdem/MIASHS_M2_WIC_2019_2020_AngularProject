@@ -36,6 +36,9 @@
     <span class="todo-count"><strong>{{itemLeft}}</strong> restantes</span>
     <ul class="filters">
       <li>
+        <fa-icon class="faButton deleteAll" [icon]="faTrash" (click)="deleteAllItems()"></fa-icon>
+      </li>
+      <li>
         <fa-icon class="faButton" [icon]="faUndo" (click)="undo()" ></fa-icon>
       </li>
       <li>
