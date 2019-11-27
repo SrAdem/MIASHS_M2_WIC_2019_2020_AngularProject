@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoService } from './todo.service';
+import { SpeechRecognitionService } from './speech-recognition.service';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -21,7 +22,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FormsModule, 
     FontAwesomeModule
   ],
-  providers: [TodoService],
+  providers: [TodoService, SpeechRecognitionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
