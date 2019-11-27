@@ -16,7 +16,7 @@ export class SpeechRecognitionService {
   constructor(private zone: NgZone) { }
   
   record(): Observable<string> {
-
+    console.log("la");
     return Observable.create(observer => {
       const { webkitSpeechRecognition }: IWindow = <IWindow>(<any>window);
       this.speechRecogniton = new webkitSpeechRecognition();

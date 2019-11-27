@@ -16,6 +16,13 @@
               placeholder = "Que faire?"
               autofocus />
     </form>
+    <section class="main">
+      <div class="voiceButton"> 
+        <button type="button" (click)="voice()">
+          <fa-icon class="faButton" [icon]="faMicro"></fa-icon>
+        </button>
+      </div>
+    </section>
   </header>
   <section class="main">
     <input  class="toggle-all"

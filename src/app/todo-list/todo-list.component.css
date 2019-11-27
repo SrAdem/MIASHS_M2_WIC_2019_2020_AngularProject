@@ -24,3 +24,11 @@
 .deleteAll {
     color: red;
 }
+
+.voiceButton {
+    position: absolute;
+    top: -52px;
+    right: -2px;
+    width: 50px;
+    height: 34px;
+}

@@ -2,10 +2,12 @@ import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild, ElementRef
 import {TodoListData} from '../dataTypes/TodoListData';
 import {TodoItemData} from '../dataTypes/TodoItemData';
 import {TodoService} from '../todo.service';
+import { SpeechRecognitionService } from '../speech-recognition.service';
 
 import { faUndo } from '@fortawesome/free-solid-svg-icons';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faMicrophoneAlt } from '@fortawesome/free-solid-svg-icons';
 
 type FCT_FILTER_ITEMS = (item: TodoItemData) => boolean;
 
@@ -28,12 +30,14 @@ export class TodoListComponent implements OnInit {
   faUndo = faUndo;
   faRedo = faRedo;
   faTrash = faTrashAlt;
+  faMicro = faMicrophoneAlt;
 
   private _editTitle: boolean = false;
   private onlyCompleted: boolean = false;
   private onlyActives: boolean = false;
+  speechData: string = "";
 
-  constructor(private todoService: TodoService) { 
+  constructor(private todoService: TodoService, private speechRecognitionService : SpeechRecognitionService) { 
     todoService.getTodoListDataObserver().subscribe( tdl => this.data = tdl );
   }
 
@@ -117,5 +121,25 @@ export class TodoListComponent implements OnInit {
 
   redo() {
     this.todoService.redoItem();
+  }
+
+  voice() {
+    this.speechRecognitionService.record()
+    .subscribe(
+      (value) =>  {
+        this.speechData = value;
+        console.log(value);
+      },
+      (err) => {
+        if (err.error == "no-speech") {
+          console.log("--restarting service--");
+          this.voice();
+        }
+      },
+      () => {
+        console.log("--comlete--");
+        this.voice();
+      }
+    );
   }
 }
