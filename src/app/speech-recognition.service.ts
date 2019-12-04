@@ -16,7 +16,6 @@ export class SpeechRecognitionService {
   constructor(private zone: NgZone) { }
   
   record(): Observable<string> {
-    console.log("la");
     return Observable.create(observer => {
       const { webkitSpeechRecognition }: IWindow = <IWindow>(<any>window);
       this.speechRecogniton = new webkitSpeechRecognition();
@@ -33,11 +32,9 @@ export class SpeechRecognitionService {
           var transcript = result[0].transcript;
           if (result.isFinal) {
             if(result[0].confidence < 0.3) {
-              console.log("Unrecognized result - Please try again");
             }
             else {
               term = _.trim(transcript);
-              console.log("Did ou said? -> " + term + " , If not then say something else ...");
             }
           }
         }
@@ -55,7 +52,6 @@ export class SpeechRecognitionService {
       };
 
       this.speechRecogniton.start();
-      console.log("Say someting - We are listening !!!");
     });
   }
 
