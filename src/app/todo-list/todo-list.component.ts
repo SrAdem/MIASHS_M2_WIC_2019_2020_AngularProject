@@ -129,6 +129,7 @@ export class TodoListComponent implements OnInit {
       (value) =>  {
         this.speechRecognitionService.DestroySpeechObject();
         this.inputTodo.nativeElement.value = value;
+        requestAnimationFrame(() => this.inputTodo.nativeElement.focus());
       },
       (err) => {
         if (err.error == "no-speech") {
