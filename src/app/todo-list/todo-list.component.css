@@ -3,4 +3,9 @@
     padding: 2px;
     border: solid;
     border-width: 1px;
+    cursor: pointer;
+}
+
+.faButton:hover {
+    background-color: silver;
 }

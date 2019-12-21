@@ -19,6 +19,16 @@ export class TodoService {
     return this.todoListSubject.asObservable();
   }
 
+  setListLabel(title: string) {
+    const tdl = this.todoListSubject.getValue();
+    this.todoListSubject.next( {
+      label: title,
+      items: tdl.items
+    });
+
+    this.save(tdl);
+  }
+
   setItemsLabel(label: string, ...items: TodoItemData[] ) {
     const tdl = this.todoListSubject.getValue();
     this.todoListSubject.next( {
@@ -54,6 +64,16 @@ export class TodoService {
     this.todoListSubject.next( {
       label: tdl.label, // ou on peut écrire: ...tdl,
       items: tdl.items.filter( I => items.indexOf(I) === -1 )
+    });
+
+    this.save(tdl);
+  }
+
+  resetListItems() {
+    const tdl = this.todoListSubject.getValue();
+    this.todoListSubject.next( {
+      label: tdl.label,
+      items: []
     });
 
     this.save(tdl);
@@ -96,7 +116,7 @@ export class TodoService {
       this.undo = JSON.parse(localStorage.getItem("undo"));
     }
     if( localStorage.getItem("redo") !== null ) {
-      this.undo = JSON.parse(localStorage.getItem("redo"));
+      this.redo = JSON.parse(localStorage.getItem("redo"));
     }
   }
 
