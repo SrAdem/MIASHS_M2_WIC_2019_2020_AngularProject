@@ -116,7 +116,7 @@ export class TodoService {
       this.undo = JSON.parse(localStorage.getItem("undo"));
     }
     if( localStorage.getItem("redo") !== null ) {
-      this.undo = JSON.parse(localStorage.getItem("redo"));
+      this.redo = JSON.parse(localStorage.getItem("redo"));
     }
   }
 

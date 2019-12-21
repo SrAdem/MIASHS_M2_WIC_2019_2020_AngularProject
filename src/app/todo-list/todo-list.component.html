@@ -46,10 +46,10 @@
         <fa-icon class="faButton deleteAll" [icon]="faTrash" (click)="deleteAllItems()"></fa-icon>
       </li>
       <li>
-        <fa-icon class="faButton" [icon]="faUndo" (click)="undo()" ></fa-icon>
+        <fa-icon class="faButton" title="undo" [icon]="faUndo" (click)="undo()" ></fa-icon>
       </li>
       <li>
-        <fa-icon class="faButton" [icon]="faRedo" (click)="redo()"></fa-icon>
+        <fa-icon class="faButton" title="redo" [icon]="faRedo" (click)="redo()"></fa-icon>
       </li>
       <li>
         <a class="filterAll" (click)="currentFilter = filterAll">Tous</a>
