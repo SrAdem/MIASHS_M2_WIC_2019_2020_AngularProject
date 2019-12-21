@@ -1,25 +1,48 @@
-# MIASHS-M2-TP3-Projet
+# MIASHS Master 2 - Projet Angular
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Afin d'installer la todolist, il vous faut cloner le répertoire et installer toutes les dépendances.
+Pour ce faire, il vous suffit d'éffectuer les commandes suivantes :
+```
+git clone https://github.com/SrAdem/MIASHS_M2_WIC_2019_2020_AngularProject.git
+cd MIASHS_M2_WIC_2019_2020_AngularProject
+npm install
+```
+ 
+## Utilisation
+ 
+Tout en restant dans le répertoire du projet, exécuter la commande suivante :
+```
+ng serve -o
+```
+Ensuite, à l'aide de votre navigateur préféré (de préférence Chrome) aller sur la page `http://localhost:4200/`.
 
-## Code scaffolding
+---
+## Fonctionnalités
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Ici sont listées toutes les fonctionnalités supplémentaires de l'application.
 
-## Build
+### Édition du nom de la liste
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Il est possible de modifier le titre de la todolist à l'aide d'un double clic sur le titre.
+Une zone pré-complété avec le titre actuel apparaitra avec le focus dessus. Plus qu'à modifier et appuyer sur la touche "entré".
 
-## Running unit tests
+### Effacer Tout
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Un bouton permettant d'effacer toute la todolist. Il ne réinitialise pas le nom de la liste pour autant.
 
-## Running end-to-end tests
+### Undo Redo
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Deux boutons ont été ajoutés, un pour défaire toutes les actions possibles sur l'application (y compris les fonctionnalités précédentes), l'autre refaire ce qui a été défait. Si on défait une action, ce qui a été défait peut être refait, sauf si l'utilisateur effectue une nouvelle action hormis le "redo".
 
-## Further help
+### Local Storage 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Cette fonctionnalité permet d'enregistrer sa todolist afin de pouvoir y accéder plus tard, en fermant et en redémarrant son navigateur. Si on change de navigateur, la todolist sera différente.
+De plus, les undo et redo sont aussi enregistrer, ce qui veut dire qu'on peut défaire une action, même après avoir relancé sa page de todolist ultérieurement.
+
+### Reconnaissance Vocale
+
+> Cette fonctionnalité n'est utilisable que sur le navigateur chrome !
+
+Il est possible d'ajouter un élément à la liste à partir d'un bouton qui active la reconnaissance vocal. La fonctionnalité ne reconnait que le français, de plus ce qui a été énoncé par l'utilisateur est affiché dans la barre de complétion d'élément pour que l'utilisateur puisse modifier le texte s'il y a eu une incompréhension de la détection vocale.
