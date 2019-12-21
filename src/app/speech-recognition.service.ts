@@ -15,13 +15,12 @@ export class SpeechRecognitionService {
 
   constructor(private zone: NgZone) { }
   
+  //Reconnaissance vocale
   record(): Observable<string> {
     return Observable.create(observer => {
       const { webkitSpeechRecognition }: IWindow = <IWindow>(<any>window);
       this.speechRecognition = new webkitSpeechRecognition();
-      // this.speechRecogniton = SpeechRecognition;
       this.speechRecognition.continuous = true;
-      // this.speechRecogniton.interimResults = true;
       this.speechRecognition.lang = 'fr';
       this.speechRecognition.maxAlternatives = 1;
 

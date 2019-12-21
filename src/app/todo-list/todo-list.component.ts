@@ -34,8 +34,6 @@ export class TodoListComponent implements OnInit {
   faMicro = faMicrophoneAlt;
 
   private _editTitle: boolean = false;
-  private onlyCompleted: boolean = false;
-  private onlyActives: boolean = false;
 
   constructor(private todoService: TodoService, private speechRecognitionService : SpeechRecognitionService) { 
     todoService.getTodoListDataObserver().subscribe( tdl => this.data = tdl );
@@ -98,7 +96,6 @@ export class TodoListComponent implements OnInit {
   }
 
   isAllDone(): boolean {
-    //return this.items.reduce( (acc, it) => acc && it.isDone, true);
     return this.items.every( it => it.isDone );
   }
 
@@ -123,6 +120,8 @@ export class TodoListComponent implements OnInit {
     this.todoService.redoItem();
   }
 
+  //Enregistre la voix et l'affiche dans l'input du formulaire.
+  //L'utilisateur n'a qu'à valider.
   voice() {
     this.speechRecognitionService.record()
     .subscribe(

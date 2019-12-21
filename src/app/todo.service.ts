@@ -69,6 +69,7 @@ export class TodoService {
     this.save(tdl);
   }
 
+  // Supprimer tout les items de la liste 
   resetListItems() {
     const tdl = this.todoListSubject.getValue();
     this.todoListSubject.next( {
@@ -79,6 +80,7 @@ export class TodoService {
     this.save(tdl);
   }
 
+  //Faire un Undo
   undoItem() {
     if(this.undo.length !== 0) {
       this.redo.push(this.todoListSubject.getValue()); //On met la liste actuelle dans le redo
@@ -92,6 +94,7 @@ export class TodoService {
     }
   }
 
+  //Faire un redo
   redoItem() {
     if(this.redo.length !== 0) {
       this.undo.push(this.todoListSubject.getValue()) //On met la liste actuelle dans le undo
@@ -104,6 +107,7 @@ export class TodoService {
     }
   }
 
+  //Au chargement, on récupère les données du localStorage
   private load() {
     if ( localStorage.getItem("todoList") !== null ) {
       const tdl = JSON.parse(localStorage.getItem("todoList"));
@@ -120,12 +124,14 @@ export class TodoService {
     }
   }
 
+  //On sauvegarde les modification dans le undo 
   private save(before:TodoListData) {
     this.undo.push(before);
     this.redo = [];
     this.saveToLocalStorage();
   }
 
+  // On sauvegarde tout dans le local storage
   private saveToLocalStorage() {
     localStorage.setItem( "undo", JSON.stringify(this.undo) );
     localStorage.setItem( "todoList", JSON.stringify(this.todoListSubject.getValue()) );
