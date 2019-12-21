@@ -8,7 +8,6 @@ import { faUndo } from '@fortawesome/free-solid-svg-icons';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faMicrophoneAlt } from '@fortawesome/free-solid-svg-icons';
-// import { NgForm } from '@angular/forms';
 
 type FCT_FILTER_ITEMS = (item: TodoItemData) => boolean;
 
@@ -27,7 +26,7 @@ export class TodoListComponent implements OnInit {
 
   @Input() private data: TodoListData;
   @ViewChild("newTitleInput", {static: false}) private inputLabel: ElementRef;
-  // @ViewChild("newTodoInputForm", {static: false}) private inputTodo: NgForm;
+  @ViewChild("newTodoInput", {static: false}) private inputTodo: ElementRef;
   
   faUndo = faUndo;
   faRedo = faRedo;
@@ -37,17 +36,12 @@ export class TodoListComponent implements OnInit {
   private _editTitle: boolean = false;
   private onlyCompleted: boolean = false;
   private onlyActives: boolean = false;
-  private _speechData: string = "";
 
   constructor(private todoService: TodoService, private speechRecognitionService : SpeechRecognitionService) { 
     todoService.getTodoListDataObserver().subscribe( tdl => this.data = tdl );
   }
 
   ngOnInit() {
-  }
-
-  get speechData(): string {
-    return this._speechData;
   }
 
   get label(): string {
@@ -133,11 +127,8 @@ export class TodoListComponent implements OnInit {
     this.speechRecognitionService.record()
     .subscribe(
       (value) =>  {
-        this._speechData = value;
         this.speechRecognitionService.DestroySpeechObject();
-        // this.inputTodo.nativeElement.innerHTML = this._speechData;
-        // this.inputTodo.ngSubmit.emit();
-        this.appendItem(this._speechData);
+        this.inputTodo.nativeElement.value = value;
       },
       (err) => {
         if (err.error == "no-speech") {

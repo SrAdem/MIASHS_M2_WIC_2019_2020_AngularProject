@@ -11,21 +11,21 @@ interface IWindow extends Window {
   providedIn: 'root'
 })
 export class SpeechRecognitionService {
-  speechRecogniton: any;
+  speechRecognition: any;
 
   constructor(private zone: NgZone) { }
   
   record(): Observable<string> {
     return Observable.create(observer => {
       const { webkitSpeechRecognition }: IWindow = <IWindow>(<any>window);
-      this.speechRecogniton = new webkitSpeechRecognition();
+      this.speechRecognition = new webkitSpeechRecognition();
       // this.speechRecogniton = SpeechRecognition;
-      this.speechRecogniton.continuous = true;
+      this.speechRecognition.continuous = true;
       // this.speechRecogniton.interimResults = true;
-      this.speechRecogniton.lang = 'fr';
-      this.speechRecogniton.maxAlternatives = 1;
+      this.speechRecognition.lang = 'fr';
+      this.speechRecognition.maxAlternatives = 1;
 
-      this.speechRecogniton.onresult = speech => {
+      this.speechRecognition.onresult = speech => {
         let term: string = "";
         if(speech.results) {
           var result = speech.results[speech.resultIndex];
@@ -43,21 +43,21 @@ export class SpeechRecognitionService {
         });
       };
 
-      this.speechRecogniton.onerror = error => {
+      this.speechRecognition.onerror = error => {
         observer.error(error);
       };
 
-      this.speechRecogniton.onend= () => {
+      this.speechRecognition.onend= () => {
         observer.complete();
       };
 
-      this.speechRecogniton.start();
+      this.speechRecognition.start();
     });
   }
 
   DestroySpeechObject() {
-    if (this.speechRecogniton)
-      this.speechRecogniton.stop();
+    if (this.speechRecognition)
+      this.speechRecognition.stop();
   }
 
 }
